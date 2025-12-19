@@ -1,17 +1,8 @@
-terraform {
-  required_providers {
-    azurerm = {
-      source  = "hashicorp/azurerm"
-      version = "~> 4.0"
-    }
-  }
-}
-
 resource "azurerm_network_interface" "this" {
   name                = "${var.name}-nic"
   location            = var.location
   resource_group_name = var.resource_group_name
-  tags                = var.tags
+  tags = local.common_tags
 
   ip_configuration {
     name                          = "internal"
@@ -44,5 +35,5 @@ resource "azurerm_windows_virtual_machine" "this" {
     version   = var.source_image_reference.version
   }
 
-  tags = var.tags
+  tags = local.common_tags
 }

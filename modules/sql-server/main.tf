@@ -1,12 +1,3 @@
-terraform {
-  required_providers {
-    azurerm = {
-      source  = "hashicorp/azurerm"
-      version = "~> 4.0"
-    }
-  }
-}
-
 resource "azurerm_mssql_server" "this" {
   name                         = var.name
   resource_group_name          = var.resource_group_name
@@ -16,7 +7,7 @@ resource "azurerm_mssql_server" "this" {
   administrator_login_password = var.administrator_login_password
   minimum_tls_version          = var.minimum_tls_version
   public_network_access_enabled = var.public_network_access_enabled
-  tags                         = var.tags
+  tags = local.common_tags
 }
 
 resource "azurerm_mssql_database" "this" {
@@ -28,7 +19,7 @@ resource "azurerm_mssql_database" "this" {
   license_type = each.value.license_type
   max_size_gb  = each.value.max_size_gb
   sku_name     = each.value.sku_name
-  tags         = var.tags
+  tags = local.common_tags
 }
 
 resource "azurerm_mssql_firewall_rule" "this" {

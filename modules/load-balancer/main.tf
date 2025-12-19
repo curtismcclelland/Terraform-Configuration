@@ -1,19 +1,10 @@
-terraform {
-  required_providers {
-    azurerm = {
-      source  = "hashicorp/azurerm"
-      version = "~> 4.0"
-    }
-  }
-}
-
 resource "azurerm_lb" "this" {
   name                = var.name
   location            = var.location
   resource_group_name = var.resource_group_name
   sku                 = var.sku
   sku_tier            = var.sku_tier
-  tags                = var.tags
+  tags = local.common_tags
 
   dynamic "frontend_ip_configuration" {
     for_each = var.frontend_ip_configurations
