@@ -21,22 +21,19 @@ resource "azurerm_container_registry" "this" {
     }
   }
 
-  network_rule_set {
-    default_action = var.network_rule_set.default_action
+  public_network_access_enabled = var.network_rule_set.default_action == "Allow"
 
-    dynamic "ip_rule" {
-      for_each = var.network_rule_set.ip_rules != null ? var.network_rule_set.ip_rules : []
-      content {
-        action   = "Allow"
-        ip_range = ip_rule.value
-      }
-    }
+  dynamic "network_rule_set" {
+    for_each = var.network_rule_set.default_action == "Deny" ? [1] : []
+    content {
+      default_action = "Deny"
 
-    dynamic "virtual_network" {
-      for_each = var.network_rule_set.virtual_network_subnet_ids != null ? var.network_rule_set.virtual_network_subnet_ids : []
-      content {
-        action    = "Allow"
-        subnet_id = virtual_network.value
+      dynamic "ip_rule" {
+        for_each = var.network_rule_set.ip_rules != null ? var.network_rule_set.ip_rules : []
+        content {
+          action   = "Allow"
+          ip_range = ip_rule.value
+        }
       }
     }
   }
