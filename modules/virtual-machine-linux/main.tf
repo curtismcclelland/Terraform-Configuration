@@ -29,9 +29,9 @@ resource "azurerm_linux_virtual_machine" "this" {
   network_interface_ids = [
     azurerm_network_interface.this.id,
   ]
-  
+
   disable_password_authentication = var.disable_password_authentication
-  
+
   dynamic "admin_ssh_key" {
     for_each = var.admin_ssh_key != null ? [var.admin_ssh_key] : []
     content {

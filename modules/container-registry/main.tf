@@ -13,14 +13,14 @@ resource "azurerm_container_registry" "this" {
   location            = var.location
   sku                 = var.sku
   admin_enabled       = var.admin_enabled
-  
+
   lifecycle {
     precondition {
       condition     = length(var.georeplications) == 0 || var.sku == "Premium"
       error_message = "Georeplications are only supported with Premium SKU container registry"
     }
   }
-  
+
   dynamic "georeplications" {
     for_each = var.georeplications
     content {
@@ -29,10 +29,10 @@ resource "azurerm_container_registry" "this" {
       tags                    = georeplications.value.tags != null ? georeplications.value.tags : var.tags
     }
   }
-  
+
   network_rule_set {
     default_action = var.network_rule_set.default_action
-    
+
     dynamic "ip_rule" {
       for_each = var.network_rule_set.ip_rules != null ? var.network_rule_set.ip_rules : []
       content {
@@ -40,7 +40,7 @@ resource "azurerm_container_registry" "this" {
         ip_range = ip_rule.value
       }
     }
-    
+
     dynamic "virtual_network" {
       for_each = var.network_rule_set.virtual_network_subnet_ids != null ? var.network_rule_set.virtual_network_subnet_ids : []
       content {
@@ -49,6 +49,6 @@ resource "azurerm_container_registry" "this" {
       }
     }
   }
-  
+
   tags = var.tags
 }
