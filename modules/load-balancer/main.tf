@@ -57,7 +57,7 @@ resource "azurerm_lb_rule" "this" {
   backend_port                   = each.value.backend_port
   frontend_ip_configuration_name = each.value.frontend_ip_configuration_name
   backend_address_pool_ids       = [azurerm_lb_backend_address_pool.this[each.value.backend_address_pool_name].id]
-  probe_id                       = lookup(each.value, "probe_name", null) != null ? azurerm_lb_probe.this[each.value.probe_name].id : null
+  probe_id                       = each.value.probe_name != null ? azurerm_lb_probe.this[each.value.probe_name].id : null
   enable_floating_ip             = lookup(each.value, "enable_floating_ip", false)
   idle_timeout_in_minutes        = lookup(each.value, "idle_timeout_in_minutes", 4)
 }

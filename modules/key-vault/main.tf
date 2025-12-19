@@ -25,8 +25,8 @@ resource "azurerm_key_vault" "this" {
   network_acls {
     bypass         = var.network_acls.bypass
     default_action = var.network_acls.default_action
-    ip_rules       = lookup(var.network_acls, "ip_rules", [])
-    virtual_network_subnet_ids = lookup(var.network_acls, "virtual_network_subnet_ids", [])
+    ip_rules       = var.network_acls.ip_rules
+    virtual_network_subnet_ids = var.network_acls.virtual_network_subnet_ids
   }
   
   tags = var.tags

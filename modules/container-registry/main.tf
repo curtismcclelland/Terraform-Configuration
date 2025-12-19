@@ -27,7 +27,7 @@ resource "azurerm_container_registry" "this" {
     default_action = var.network_rule_set.default_action
     
     dynamic "ip_rule" {
-      for_each = lookup(var.network_rule_set, "ip_rules", [])
+      for_each = var.network_rule_set.ip_rules != null ? var.network_rule_set.ip_rules : []
       content {
         action   = "Allow"
         ip_range = ip_rule.value
@@ -35,7 +35,7 @@ resource "azurerm_container_registry" "this" {
     }
     
     dynamic "virtual_network" {
-      for_each = lookup(var.network_rule_set, "virtual_network_subnet_ids", [])
+      for_each = var.network_rule_set.virtual_network_subnet_ids != null ? var.network_rule_set.virtual_network_subnet_ids : []
       content {
         action    = "Allow"
         subnet_id = virtual_network.value
