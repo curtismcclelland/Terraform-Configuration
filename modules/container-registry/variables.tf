@@ -37,10 +37,6 @@ variable "georeplications" {
     tags                    = optional(map(string))
   }))
   default = []
-  validation {
-    condition     = length(var.georeplications) == 0 || var.sku == "Premium"
-    error_message = "Georeplications are only supported with Premium SKU"
-  }
 }
 
 variable "network_rule_set" {

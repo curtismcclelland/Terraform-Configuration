@@ -43,7 +43,7 @@ module "web_app" {
 | always_on | Should the app be always on | bool | false | no |
 | ftps_state | State of FTP / FTPS service | string | Disabled | no |
 | minimum_tls_version | The minimum TLS version | string | 1.2 | no |
-| application_stack | Application stack configuration | map(string) | null | no |
+| application_stack | Application stack configuration | any | null | no |
 | tags | A mapping of tags to assign to the resource | map(string) | {} | no |
 
 ## Outputs

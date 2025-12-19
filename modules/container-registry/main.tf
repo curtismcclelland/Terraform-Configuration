@@ -14,6 +14,13 @@ resource "azurerm_container_registry" "this" {
   sku                 = var.sku
   admin_enabled       = var.admin_enabled
   
+  lifecycle {
+    precondition {
+      condition     = length(var.georeplications) == 0 || var.sku == "Premium"
+      error_message = "Georeplications are only supported with Premium SKU container registry"
+    }
+  }
+  
   dynamic "georeplications" {
     for_each = var.georeplications
     content {
