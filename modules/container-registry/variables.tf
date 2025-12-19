@@ -30,13 +30,17 @@ variable "admin_enabled" {
 }
 
 variable "georeplications" {
-  description = "List of georeplications for the Container Registry (Premium SKU only)"
+  description = "List of georeplications for the Container Registry (Premium SKU only - will fail if SKU is Basic or Standard)"
   type = list(object({
     location                = string
     zone_redundancy_enabled = optional(bool, false)
     tags                    = optional(map(string))
   }))
   default = []
+  validation {
+    condition     = length(var.georeplications) == 0 || var.sku == "Premium"
+    error_message = "Georeplications are only supported with Premium SKU"
+  }
 }
 
 variable "network_rule_set" {

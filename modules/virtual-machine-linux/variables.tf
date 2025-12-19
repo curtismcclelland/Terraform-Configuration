@@ -32,9 +32,13 @@ variable "disable_password_authentication" {
 }
 
 variable "admin_ssh_key" {
-  description = "The SSH public key for the admin user"
+  description = "The SSH public key for the admin user (required when disable_password_authentication is true)"
   type        = string
   default     = null
+  validation {
+    condition     = var.disable_password_authentication == false || var.admin_ssh_key != null
+    error_message = "admin_ssh_key is required when disable_password_authentication is true"
+  }
 }
 
 variable "subnet_id" {

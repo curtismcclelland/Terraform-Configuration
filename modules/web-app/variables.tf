@@ -59,8 +59,8 @@ variable "minimum_tls_version" {
 }
 
 variable "application_stack" {
-  description = "Application stack configuration"
-  type        = map(string)
+  description = "Application stack configuration (structure varies by OS type)"
+  type        = any
   default     = null
 }
 
