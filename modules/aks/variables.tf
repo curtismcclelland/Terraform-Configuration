@@ -37,7 +37,7 @@ variable "default_node_pool" {
     vm_size             = string
     node_count          = optional(number)
     vnet_subnet_id      = optional(string)
-    enable_auto_scaling = optional(bool)
+    enable_auto_scaling = optional(bool, false)
     min_count           = optional(number)
     max_count           = optional(number)
     os_disk_size_gb     = optional(number)
@@ -52,7 +52,7 @@ variable "network_profile" {
     network_policy    = optional(string)
     dns_service_ip    = optional(string)
     service_cidr      = optional(string)
-    load_balancer_sku = optional(string)
+    load_balancer_sku = optional(string, "standard")
   })
   default = {
     network_plugin = "azure"

@@ -73,10 +73,10 @@ variable "access_policies" {
   description = "Map of access policies to create"
   type = map(object({
     object_id               = string
-    key_permissions         = optional(list(string))
-    secret_permissions      = optional(list(string))
-    certificate_permissions = optional(list(string))
-    storage_permissions     = optional(list(string))
+    key_permissions         = optional(list(string), [])
+    secret_permissions      = optional(list(string), [])
+    certificate_permissions = optional(list(string), [])
+    storage_permissions     = optional(list(string), [])
   }))
   default = {}
 }

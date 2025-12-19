@@ -18,8 +18,8 @@ resource "azurerm_container_registry" "this" {
     for_each = var.georeplications
     content {
       location                = georeplications.value.location
-      zone_redundancy_enabled = lookup(georeplications.value, "zone_redundancy_enabled", false)
-      tags                    = lookup(georeplications.value, "tags", var.tags)
+      zone_redundancy_enabled = georeplications.value.zone_redundancy_enabled
+      tags                    = georeplications.value.tags != null ? georeplications.value.tags : var.tags
     }
   }
   

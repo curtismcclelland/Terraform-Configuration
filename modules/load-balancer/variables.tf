@@ -35,7 +35,7 @@ variable "frontend_ip_configurations" {
     public_ip_address_id          = optional(string)
     subnet_id                     = optional(string)
     private_ip_address            = optional(string)
-    private_ip_address_allocation = optional(string)
+    private_ip_address_allocation = optional(string, "Dynamic")
     zones                         = optional(list(string))
   }))
 }
@@ -52,8 +52,8 @@ variable "probes" {
     protocol            = string
     port                = number
     request_path        = optional(string)
-    interval_in_seconds = optional(number)
-    number_of_probes    = optional(number)
+    interval_in_seconds = optional(number, 15)
+    number_of_probes    = optional(number, 2)
   }))
   default = {}
 }
@@ -67,8 +67,8 @@ variable "lb_rules" {
     frontend_ip_configuration_name = string
     backend_address_pool_name      = string
     probe_name                     = optional(string)
-    enable_floating_ip             = optional(bool)
-    idle_timeout_in_minutes        = optional(number)
+    enable_floating_ip             = optional(bool, false)
+    idle_timeout_in_minutes        = optional(number, 4)
   }))
   default = {}
 }

@@ -33,7 +33,7 @@ variable "georeplications" {
   description = "List of georeplications for the Container Registry (Premium SKU only)"
   type = list(object({
     location                = string
-    zone_redundancy_enabled = optional(bool)
+    zone_redundancy_enabled = optional(bool, false)
     tags                    = optional(map(string))
   }))
   default = []

@@ -65,8 +65,8 @@ variable "backend_http_settings" {
     name                  = string
     port                  = number
     protocol              = string
-    cookie_based_affinity = optional(string)
-    request_timeout       = optional(number)
+    cookie_based_affinity = optional(string, "Disabled")
+    request_timeout       = optional(number, 30)
   })
 }
 
@@ -82,7 +82,7 @@ variable "request_routing_rule" {
   description = "Request routing rule configuration"
   type = object({
     name      = string
-    rule_type = optional(string)
+    rule_type = optional(string, "Basic")
     priority  = number
   })
 }

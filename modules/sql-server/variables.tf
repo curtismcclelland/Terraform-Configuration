@@ -45,10 +45,10 @@ variable "public_network_access_enabled" {
 variable "databases" {
   description = "Map of databases to create"
   type = map(object({
-    collation    = optional(string)
+    collation    = optional(string, "SQL_Latin1_General_CP1_CI_AS")
     license_type = optional(string)
     max_size_gb  = optional(number)
-    sku_name     = optional(string)
+    sku_name     = optional(string, "Basic")
   }))
   default = {}
 }

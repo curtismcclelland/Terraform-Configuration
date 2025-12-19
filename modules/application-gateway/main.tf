@@ -16,7 +16,7 @@ resource "azurerm_application_gateway" "this" {
   sku {
     name     = var.sku.name
     tier     = var.sku.tier
-    capacity = lookup(var.sku, "capacity", null)
+    capacity = var.sku.capacity
   }
 
   gateway_ip_configuration {
@@ -40,10 +40,10 @@ resource "azurerm_application_gateway" "this" {
 
   backend_http_settings {
     name                  = var.backend_http_settings.name
-    cookie_based_affinity = lookup(var.backend_http_settings, "cookie_based_affinity", "Disabled")
+    cookie_based_affinity = var.backend_http_settings.cookie_based_affinity
     port                  = var.backend_http_settings.port
     protocol              = var.backend_http_settings.protocol
-    request_timeout       = lookup(var.backend_http_settings, "request_timeout", 30)
+    request_timeout       = var.backend_http_settings.request_timeout
   }
 
   http_listener {
@@ -55,7 +55,7 @@ resource "azurerm_application_gateway" "this" {
 
   request_routing_rule {
     name                       = var.request_routing_rule.name
-    rule_type                  = lookup(var.request_routing_rule, "rule_type", "Basic")
+    rule_type                  = var.request_routing_rule.rule_type
     http_listener_name         = var.http_listener.name
     backend_address_pool_name  = var.backend_address_pool_name
     backend_http_settings_name = var.backend_http_settings.name
