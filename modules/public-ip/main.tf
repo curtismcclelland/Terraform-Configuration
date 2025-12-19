@@ -1,12 +1,3 @@
-terraform {
-  required_providers {
-    azurerm = {
-      source  = "hashicorp/azurerm"
-      version = "~> 4.0"
-    }
-  }
-}
-
 resource "azurerm_public_ip" "this" {
   name                = var.name
   location            = var.location
@@ -15,5 +6,5 @@ resource "azurerm_public_ip" "this" {
   sku                 = var.sku
   zones               = var.zones
   domain_name_label   = var.domain_name_label
-  tags                = var.tags
+  tags = local.common_tags
 }

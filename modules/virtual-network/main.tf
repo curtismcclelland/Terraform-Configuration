@@ -1,19 +1,10 @@
-terraform {
-  required_providers {
-    azurerm = {
-      source  = "hashicorp/azurerm"
-      version = "~> 4.0"
-    }
-  }
-}
-
 resource "azurerm_virtual_network" "this" {
   name                = var.name
   location            = var.location
   resource_group_name = var.resource_group_name
   address_space       = var.address_space
   dns_servers         = var.dns_servers
-  tags                = var.tags
+  tags = local.common_tags
 }
 
 resource "azurerm_subnet" "this" {

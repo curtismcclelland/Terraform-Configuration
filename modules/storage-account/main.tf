@@ -1,12 +1,3 @@
-terraform {
-  required_providers {
-    azurerm = {
-      source  = "hashicorp/azurerm"
-      version = "~> 4.0"
-    }
-  }
-}
-
 resource "azurerm_storage_account" "this" {
   name                     = var.name
   resource_group_name      = var.resource_group_name
@@ -17,5 +8,5 @@ resource "azurerm_storage_account" "this" {
   access_tier              = var.access_tier
   enable_https_traffic_only = var.enable_https_traffic_only
   min_tls_version          = var.min_tls_version
-  tags                     = var.tags
+  tags = local.common_tags
 }

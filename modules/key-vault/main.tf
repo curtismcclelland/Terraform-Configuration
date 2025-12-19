@@ -1,14 +1,3 @@
-terraform {
-  required_providers {
-    azurerm = {
-      source  = "hashicorp/azurerm"
-      version = "~> 4.0"
-    }
-  }
-}
-
-data "azurerm_client_config" "current" {}
-
 resource "azurerm_key_vault" "this" {
   name                       = var.name
   location                   = var.location
@@ -29,7 +18,7 @@ resource "azurerm_key_vault" "this" {
     virtual_network_subnet_ids = var.network_acls.virtual_network_subnet_ids
   }
 
-  tags = var.tags
+  tags = local.common_tags
 }
 
 resource "azurerm_key_vault_access_policy" "this" {

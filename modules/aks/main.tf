@@ -1,12 +1,3 @@
-terraform {
-  required_providers {
-    azurerm = {
-      source  = "hashicorp/azurerm"
-      version = "~> 4.0"
-    }
-  }
-}
-
 resource "azurerm_kubernetes_cluster" "this" {
   name                = var.name
   location            = var.location
@@ -39,5 +30,5 @@ resource "azurerm_kubernetes_cluster" "this" {
     load_balancer_sku = var.network_profile.load_balancer_sku
   }
 
-  tags = var.tags
+  tags = local.common_tags
 }

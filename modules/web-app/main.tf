@@ -1,19 +1,10 @@
-terraform {
-  required_providers {
-    azurerm = {
-      source  = "hashicorp/azurerm"
-      version = "~> 4.0"
-    }
-  }
-}
-
 resource "azurerm_service_plan" "this" {
   name                = var.service_plan_name
   resource_group_name = var.resource_group_name
   location            = var.location
   os_type             = var.os_type
   sku_name            = var.sku_name
-  tags                = var.tags
+  tags = local.common_tags
 }
 
 resource "azurerm_linux_web_app" "this" {
@@ -23,7 +14,7 @@ resource "azurerm_linux_web_app" "this" {
   location            = var.location
   service_plan_id     = azurerm_service_plan.this.id
   https_only          = var.https_only
-  tags                = var.tags
+  tags = local.common_tags
 
   site_config {
     always_on         = var.always_on
@@ -52,7 +43,7 @@ resource "azurerm_windows_web_app" "this" {
   location            = var.location
   service_plan_id     = azurerm_service_plan.this.id
   https_only          = var.https_only
-  tags                = var.tags
+  tags = local.common_tags
 
   site_config {
     always_on         = var.always_on

@@ -1,12 +1,3 @@
-terraform {
-  required_providers {
-    azurerm = {
-      source  = "hashicorp/azurerm"
-      version = "~> 4.0"
-    }
-  }
-}
-
 resource "azurerm_container_registry" "this" {
   name                = var.name
   resource_group_name = var.resource_group_name
@@ -50,5 +41,5 @@ resource "azurerm_container_registry" "this" {
     }
   }
 
-  tags = var.tags
+  tags = local.common_tags
 }
