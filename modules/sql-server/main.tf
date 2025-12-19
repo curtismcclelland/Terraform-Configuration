@@ -1,0 +1,41 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "~> 4.0"
+    }
+  }
+}
+
+resource "azurerm_mssql_server" "this" {
+  name                         = var.name
+  resource_group_name          = var.resource_group_name
+  location                     = var.location
+  version                      = var.server_version
+  administrator_login          = var.administrator_login
+  administrator_login_password = var.administrator_login_password
+  minimum_tls_version          = var.minimum_tls_version
+  public_network_access_enabled = var.public_network_access_enabled
+  tags                         = var.tags
+}
+
+resource "azurerm_mssql_database" "this" {
+  for_each = var.databases
+
+  name         = each.key
+  server_id    = azurerm_mssql_server.this.id
+  collation    = lookup(each.value, "collation", "SQL_Latin1_General_CP1_CI_AS")
+  license_type = lookup(each.value, "license_type", null)
+  max_size_gb  = lookup(each.value, "max_size_gb", null)
+  sku_name     = lookup(each.value, "sku_name", "Basic")
+  tags         = var.tags
+}
+
+resource "azurerm_mssql_firewall_rule" "this" {
+  for_each = var.firewall_rules
+
+  name             = each.key
+  server_id        = azurerm_mssql_server.this.id
+  start_ip_address = each.value.start_ip_address
+  end_ip_address   = each.value.end_ip_address
+}
